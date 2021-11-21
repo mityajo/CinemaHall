@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Кинотеатр</title>
+    <link rel="stylesheet" href="css/style.min.css">
+</head>
+
+<header>
+    <div class="header">
+        <div class="header__title">Кинотеатр</div>
+    </div>
+</header>
+
+<body>
+    <div class="container">
+        <table class="table">
+            <caption class="table__title">Зрительный зал</caption>
+        </table>
+        <br>
+        <div id="result"></div>
+    </div>
+
+    <div class="popup">
+        <div class="popup__bg">
+            <div class="popup__content">
+                <div class="popup__header">
+                    <div class="popup__title">Время сеанса</div>
+                    <a href="" class="popup__close close-popup">x</a>
+                </div>
+                <form class="popup__form">
+                    <div class="popup__form__content">
+                        <select id="select__time">
+                            <option value="9:00">9:00</option>
+                            <option value="11:00">11:00</option>
+                            <option value="13:00">13:00</option>
+                            <option value="15:00">15:00</option>
+                            <option value="17:00">17:00</option>
+                            <option value="19:00">19:00</option>
+                            <option value="21:00">21:00</option>
+                            <option value="23:00">23:00</option>
+                        </select>
+                    </div>
+                    <div class="popup__buttons">
+                        <input type="button" id="button-cencel" value="Отмена" class="popup__button">
+                        <input type="button" id="button-ok" value="Ok" class="popup__button">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
+</html>
