@@ -12,7 +12,7 @@ window.addEventListener('DOMContentLoaded', () => {
         btnOk = document.getElementById('button-ok'),
         btnCancel = document.getElementById('button-cencel');
 
-    let result = document.getElementById('result'),
+    let result = document.querySelector('.result__list'),
         reserved, seat;
 
 
@@ -29,7 +29,7 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         }
     }
-    createMovieHall(10, 10);
+    createMovieHall(10, 20);
 
     let seats = document.querySelectorAll('.table__seat');
     seats = Array.from(seats);
@@ -39,11 +39,13 @@ window.addEventListener('DOMContentLoaded', () => {
     function openModal() {
         popup.classList.add('active');
         popupBG.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
 
     function closeModal() {
         popup.classList.remove('active');
         popupBG.classList.remove('active');
+        document.body.style.overflow = '';
     }
 
     closePopup.addEventListener('click', (e) => {
@@ -51,45 +53,58 @@ window.addEventListener('DOMContentLoaded', () => {
         closeModal();
     });
 
-    document.addEventListener('click', (e) => {
+    popupBG.addEventListener('click', (e) => {
         if (e.target === popupBG) {
+            closeModal();
+        }
+    });
+
+    document.addEventListener('keydown', (e) => {
+        if (e.code === 'Escape' && popupBG.classList.contains('active')) {
             closeModal();
         }
     });
     // ==================================
 
-
-    table.addEventListener('click', (event) => {
-        seat = event.target;
+    // ======== Get Activ Seat ========
+    table.addEventListener('click', (e) => {
+        seat = e.target;
 
         if (seat && seat.classList.contains('table__seat')) {
             reserved = seats.indexOf(seat);
             openModal();
         }
     });
-
+    // ============================
 
     // ======== Modal Activity ========
     form.addEventListener('click', (e) => {
         e.preventDefault();
         let newTime = movieTime.value;
 
-        if (e.target == btnOk) {
+        if (e.target === btnOk) {
             timeDB[reserved] = newTime;
             seat.classList.add('active');
+            createBookingList(timeDB, result);
             closeModal();
-            result.innerHTML += `Место №${reserved+1} забронированно на ${newTime} <br>`;
         }
 
-        if (e.target == btnCancel) {
+        if (e.target === btnCancel) {
             seat.classList.remove('active');
-            timeDB.splice(reserved, 1);
-            console.log('Cancel!');
+            timeDB[reserved] = 'Отменено';
+            createBookingList(timeDB, result);
             closeModal();
-            result.innerHTML += '';
-            console.log(timeDB);
         }
-        // form.reset();
     });
     // =================================
+
+    // ======== Create Booking List ========
+    function createBookingList(timeDB, parent) {
+        parent.innerHTML = '';
+
+        timeDB.forEach((time, seat) => {
+            parent.innerHTML += `<li>Место №${seat + 1} - ${time}</li>`;
+        });
+    }
+    createBookingList(timeDB, result);
 });
